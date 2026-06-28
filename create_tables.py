@@ -6,6 +6,7 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 DB_PATH = os.path.join(DATA_DIR, "providers.db")
 
 def init_database(db_path=DB_PATH):
+    # Ensure the data directory exists
     os.makedirs(os.path.dirname(db_path), exist_ok=True)
     print(f"[*] Initializing database structure at {db_path}...")
     conn = sqlite3.connect(db_path)
@@ -40,26 +41,15 @@ def init_database(db_path=DB_PATH):
         FOREIGN KEY (npi) REFERENCES providers(npi)
     );
     """)
-    
-    # 3. Taxonomies Table
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS taxonomies (
-        code TEXT PRIMARY KEY,
-        grouping TEXT,
-        classification TEXT,
-        specialization TEXT
-    );
-    """)
 
-    # 4. Provider Taxonomies (Junction Table)
+    # 3. Provider Taxonomies Table
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS provider_taxonomies (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         npi TEXT,
         taxonomy_code TEXT,
         is_primary INTEGER,
-        FOREIGN KEY (npi) REFERENCES providers(npi),
-        FOREIGN KEY (taxonomy_code) REFERENCES taxonomies(code)
+        FOREIGN KEY (npi) REFERENCES providers(npi)
     );
     """)
     

@@ -21,6 +21,8 @@ The CMS database distribution files can exceed several gigabytes in size. To mai
 
 A case-insensitive string matching matrix automatically handles the unpredictable trailing spaces or header formatting variations frequently present in CMS weekly incremental data packages.
 
+## System Data Flow
+
 ```mermaid
 flowchart TD
     A[Raw CMS NPI Data File .csv] --> B(Pandas Ingestion Stream)
@@ -34,6 +36,7 @@ flowchart TD
     style D fill:#9f9,stroke:#333,stroke-width:2px
     style E fill:#9f9,stroke:#333,stroke-width:2px
     style F fill:#9f9,stroke:#333,stroke-width:2px
+```
 Relational Database Schema
 The target SQLite database (providers.db) is structured into a normalized schema optimized for relational queries and indexing:
 

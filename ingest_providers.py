@@ -2,7 +2,12 @@ import pandas as pd
 import sqlite3
 import os
 
-def process_npi_file(npi_csv, db_path="providers.db"):
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+DB_PATH = os.path.join(DATA_DIR, "providers.db")
+NPI_CSV_FILENAME = "npidata_pfile_20260601-20260607.csv"
+
+def process_npi_file(npi_csv, db_path=DB_PATH):
     if not os.path.exists(npi_csv):
         print(f"[!] Targeted data file '{npi_csv}' not found.")
         return
@@ -80,4 +85,5 @@ def process_npi_file(npi_csv, db_path="providers.db"):
         print("[*] Stream complete. Database finalized.")
 
 if __name__ == "__main__":
-    process_npi_file("npidata_pfile_20260601-20260607.csv")
+    npi_csv_path = os.path.join(DATA_DIR, NPI_CSV_FILENAME)
+    process_npi_file(npi_csv_path)

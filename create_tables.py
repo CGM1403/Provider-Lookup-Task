@@ -1,6 +1,12 @@
 import sqlite3
+import os
 
-def init_database(db_path="providers.db"):
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+DB_PATH = os.path.join(DATA_DIR, "providers.db")
+
+def init_database(db_path=DB_PATH):
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
     print(f"[*] Initializing database structure at {db_path}...")
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()

@@ -5,7 +5,16 @@ Markdown
 A high-performance, memory-safe data engineering pipeline built in Python to stream, clean, and ingest massive National Provider Identifier (NPI) data from the Centers for Medicare & Medicaid Services (CMS) into a normalized, local relational SQLite database.
 
 ---
+## Relational Database Schema
 
+The target SQLite database (providers.db) is structured into a normalized schema optimized for relational queries and indexing:
+
+![Entity Relationship Diagram](images/erd_diagram.png)
+
+* **providers**: Holds core identity details, distinguishing between Entity Type 1 (Individuals) and Entity Type 2 (Organizations), alongside current operational status.
+* **addresses**: Maps unique primary and mailing address records directly back to an individual NPI identifier.
+* **provider_taxonomies**: Acts as a relational junction tracking active healthcare provider specialty classifications.
+---
 ## System Architecture & Data Flow
 
 The CMS database distribution files can exceed several gigabytes in size. To maintain a lightweight hardware footprint, this system utilizes a chunk-based streaming architecture via the Python Pandas library to process row sequences iteratively without exhausting system memory.
